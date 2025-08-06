@@ -1,6 +1,6 @@
-const express = require("express");
+const express = require("express"); 
 const mongoose = require("mongoose");
-const cors = require("cors")
+const cors = require("cors");
 require("dotenv").config();
 
 const goalRoutes = require("./routes/goalRoutes");
@@ -8,22 +8,17 @@ const goalRoutes = require("./routes/goalRoutes");
 // Initialize the express application
 const app = express();
 
-// define the port
+// Define the port
 const port = process.env.PORT || 4000;
 
-
-// All middlewares ||
-// cors
+// All middlewares
 app.use(cors());
-
-// middleware
 app.use(express.json());
 
-// routes middleware
+// Routes middleware
 app.use("/api/goals", goalRoutes);
 
-
-// ✅ Root route
+// ✅ Root route for confirmation on base URL
 app.get("/", (req, res) => {
   res.send(`
     <!DOCTYPE html>
@@ -70,16 +65,14 @@ app.get("/", (req, res) => {
   `);
 });
 
-
-
+// Start the server and connect to MongoDB
 const start = async () => {
   try {
     await mongoose.connect(process.env.MONGO_URI);
-
     console.log("Database connected");
 
     app.listen(port, () => {
-      console.log(`server is running on PORT ${port}`);
+      console.log(`Server is running on PORT ${port}`);
     });
   } catch (err) {
     console.error(err);
@@ -87,4 +80,3 @@ const start = async () => {
 };
 
 start();
-
